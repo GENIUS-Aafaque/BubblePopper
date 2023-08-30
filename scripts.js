@@ -51,7 +51,7 @@ document.querySelector(".canvas").addEventListener("click", function (event) {
   }
 });
 
-// Make this the initiator that runs the gameLoop
+// Make this the initiator that runs the gameLoop - also css
 document.addEventListener("keydown", function (event) {
   if (event.key === " ") {
     location.reload();
