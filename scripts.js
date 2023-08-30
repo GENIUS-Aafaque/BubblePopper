@@ -15,7 +15,8 @@ function generateBubbles() {
   }, 750);
 }
 
-function runTimer() {
+function gameLoop() {
+  generateBubbles();
   var timeRunner = setInterval(function () {
     if (timer > 0) {
       timer--;
@@ -43,18 +44,18 @@ function updateScore() {
   document.querySelector(".score").textContent = currentScore;
 }
 
-document.querySelector(".canvas").addEventListener("click", function (dets) {
-  if (dets.target.classList.contains("bubble")) {
-    dets.target.style.setProperty("display", "none");
+document.querySelector(".canvas").addEventListener("click", function (event) {
+  if (event.target.classList.contains("bubble")) {
+    event.target.style.setProperty("display", "none");
     updateScore();
   }
 });
 
+// Make this the initiator that runs the gameLoop
 document.addEventListener("keydown", function (event) {
   if (event.key === " ") {
     location.reload();
   }
 });
 
-generateBubbles();
-runTimer();
+gameLoop();
