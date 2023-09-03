@@ -2,6 +2,9 @@ var timer = 10;
 var currentScore = 0;
 var counter = 0;
 
+var highScore = parseInt(localStorage.getItem("highScore")) || 0;
+document.querySelector(".high-score").textContent = highScore;
+
 function generateBubbles() {
   var generate = setInterval(function () {
     counter += 1;
@@ -32,10 +35,10 @@ function gameLoop() {
 }
 
 function updateHighScore() {
-  var highScore = document.querySelector(".high-score").textContent;
   if (currentScore >= highScore) {
     highScore = currentScore;
     document.querySelector(".high-score").textContent = highScore;
+    localStorage.setItem("highScore", highScore);
   }
 }
 
