@@ -73,8 +73,8 @@ article {
 }
 
 .bubble {
-  width: 3rem;
-  height: 3rem;
+  width: 10vh;
+  height: 10vh;
   background: rgb(251, 251, 255);
   background: radial-gradient(
     rgba(251, 251, 255, 1) 36%,
@@ -90,11 +90,11 @@ article {
 }
 
 .small {
-  width: 4rem;
-  height: 4rem;
+  width: 7vh;
+  height: 7vh;
 }
 
 .large {
-  width: 5rem;
-  height: 5rem;
+  width: 13vh;
+  height: 13vh;
 }

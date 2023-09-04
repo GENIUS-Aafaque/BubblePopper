@@ -14,7 +14,7 @@ function generateBubbles() {
     const bubbleSizeClass =
       size === 0 ? "small" : size === 1 ? "medium" : "large";
     bubble.classList.add(bubbleSizeClass);
-    const score = size === 0 ? 5 : size === 1 ? 10 : 20;
+    const score = size === 0 ? 20 : size === 1 ? 10 : 5;
     bubble.dataset.score = score;
     bubble.style.left = `${Math.floor(Math.random() * 80) + 10}%`;
     document.querySelector(".canvas").appendChild(bubble);
