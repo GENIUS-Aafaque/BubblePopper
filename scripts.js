@@ -1,4 +1,4 @@
-var timer = 10;
+var timer = 30;
 var currentScore = 0;
 var counter = 0;
 
@@ -10,6 +10,12 @@ function generateBubbles() {
     counter += 1;
     bubble = document.createElement("div");
     bubble.className = `bubble c${counter}`;
+    const size = Math.floor(Math.random() * 3);
+    const bubbleSizeClass =
+      size === 0 ? "small" : size === 1 ? "medium" : "large";
+    bubble.classList.add(bubbleSizeClass);
+    const score = size === 0 ? 5 : size === 1 ? 10 : 20;
+    bubble.dataset.score = score;
     bubble.style.left = `${Math.floor(Math.random() * 80) + 10}%`;
     document.querySelector(".canvas").appendChild(bubble);
     if (timer == 0) {
@@ -42,15 +48,15 @@ function updateHighScore() {
   }
 }
 
-function updateScore() {
-  currentScore += 10;
+function updateScore(score) {
+  currentScore += score;
   document.querySelector(".score").textContent = currentScore;
 }
 
 document.querySelector(".canvas").addEventListener("click", function (event) {
   if (event.target.classList.contains("bubble")) {
     event.target.style.setProperty("display", "none");
-    updateScore();
+    updateScore(parseInt(event.target.dataset.score));
   }
 });
 
