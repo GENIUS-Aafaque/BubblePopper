@@ -77,25 +77,26 @@ document.querySelector(".canvas").addEventListener("click", function (event) {
 //   }
 // });
 
-document.querySelector(".game-control").addEventListener("click", function () {
-  console.log(isPaused, !isPaused);
-  isPaused = !isPaused;
-  if (isPaused == true) {
+document.querySelector(".play").addEventListener("click", togglePlayPause);
+document.querySelector(".pause").addEventListener("click", togglePlayPause);
+
+function togglePlayPause() {
+  console.log(isPaused);
+  if (isPaused) {
     // Resume the game
     // isPaused = false;
     document.querySelector(".pause").classList.remove("hidden");
     document.querySelector(".play").classList.add("hidden");
-    // console.log(document.querySelector(".play").classList);
-    // console.log(document.querySelector(".pause").classList);
   } else {
     // Pause the game
     // isPaused = true;
     document.querySelector(".play").classList.remove("hidden");
     document.querySelector(".pause").classList.add("hidden");
   }
-});
+  isPaused = !isPaused;
+}
 
-document.querySelector("#restart").addEventListener("click", function () {
+document.querySelector(".restart").addEventListener("click", function () {
   clearInterval(timeRunner);
   clearInterval(generate);
   gameLoop();
