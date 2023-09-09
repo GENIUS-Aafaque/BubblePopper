@@ -30,11 +30,11 @@ function generateBubbles() {
 }
 
 function gameLoop() {
-  timer = 30;
+  timer = 5;
   currentScore = 0;
   counter = 0;
   document.querySelector(".canvas").innerHTML = "";
-  generateBubbles();
+  // generateBubbles();
   timeRunner = setInterval(function () {
     if (!isPaused) {
       if (timer > 0) {
@@ -44,7 +44,13 @@ function gameLoop() {
         document.querySelector(".timer").textContent = timer;
       } else {
         updateHighScore();
-        document.querySelector(".canvas").innerHTML = "<h1>GAME OVER!</h1>";
+        document.querySelector(".canvas").innerHTML = `<h1>GAME OVER!</h1>`;
+        setTimeout(function () {
+          document.querySelector(
+            ".canvas"
+          ).innerHTML = `<button class="start-button">Start</button>`;
+        }, 1000);
+        startButton.style.setProperty("display", "block");
         clearInterval(timeRunner);
       }
     }
@@ -100,8 +106,15 @@ document.querySelector(".restart").addEventListener("click", function () {
   clearInterval(timeRunner);
   clearInterval(generate);
   gameLoop();
+  generateBubbles();
 });
 
+startButton = document.querySelector(".start-button");
+startButton.addEventListener("click", function () {
+  startButton.style.setProperty("display", "none");
+  gameLoop();
+  generateBubbles();
+});
 // document.querySelector("#restart").addEventListener("click", function () {
 //   setTimeout(function () {
 //     clearInterval(timeRunner);
