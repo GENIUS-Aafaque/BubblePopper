@@ -89,8 +89,12 @@ article {
   padding: 0.2em 0.8em;
   font-size: 1.5em;
   color: white;
-  background-color: rgb(52, 62, 63);
-  border: solid 0.2em rgb;
+  background-color: #5cbbd8;
+  border: solid 0.2em rgba(0, 92, 173, 0.704);
+  background: linear-gradient(
+    rgb(134, 197, 226) 26%,
+    rgba(0, 92, 173, 0.704) 100%
+  );
   border-radius: 0.5em;
 }
 
