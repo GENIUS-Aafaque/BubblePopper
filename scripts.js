@@ -30,7 +30,7 @@ function generateBubbles() {
 }
 
 function gameLoop() {
-  timer = 5;
+  timer = 30;
   currentScore = 0;
   counter = 0;
   document.querySelector(".canvas").innerHTML = "";
@@ -112,6 +112,8 @@ document.querySelector(".restart").addEventListener("click", function () {
 startButton = document.querySelector(".start-button");
 startButton.addEventListener("click", function () {
   startButton.style.setProperty("display", "none");
+  document.querySelector(".pause").classList.remove("hidden");
+  document.querySelector(".play").classList.add("hidden");
   gameLoop();
   generateBubbles();
 });
