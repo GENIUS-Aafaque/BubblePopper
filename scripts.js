@@ -20,7 +20,7 @@ function generateBubbles() {
       bubble.classList.add(bubbleSizeClass);
       const score = size === 0 ? 20 : size === 1 ? 10 : 5;
       bubble.dataset.score = score;
-      bubble.style.left = `${Math.floor(Math.random() * 80) + 10}%`;
+      bubble.style.left = `${Math.floor(Math.random() * 70) + 10}%`;
       document.querySelector(".canvas").appendChild(bubble);
       if (timer == 0) {
         clearInterval(generate);
@@ -34,7 +34,7 @@ function gameLoop() {
   currentScore = 0;
   counter = 0;
   document.querySelector(".canvas").innerHTML = "";
-  // generateBubbles();
+  generateBubbles();
   timeRunner = setInterval(function () {
     if (!isPaused) {
       if (timer > 0) {
@@ -54,7 +54,7 @@ function gameLoop() {
         clearInterval(timeRunner);
       }
     }
-  }, 1000);
+  }, 2000);
 }
 
 function updateHighScore() {
@@ -103,20 +103,24 @@ function togglePlayPause() {
 }
 
 document.querySelector(".restart").addEventListener("click", function () {
+  displayPauseButton();
   clearInterval(timeRunner);
   clearInterval(generate);
   gameLoop();
-  generateBubbles();
 });
 
 startButton = document.querySelector(".start-button");
 startButton.addEventListener("click", function () {
   startButton.style.setProperty("display", "none");
+  displayPauseButton();
+  gameLoop();
+});
+
+function displayPauseButton() {
   document.querySelector(".pause").classList.remove("hidden");
   document.querySelector(".play").classList.add("hidden");
-  gameLoop();
-  generateBubbles();
-});
+}
+
 // document.querySelector("#restart").addEventListener("click", function () {
 //   setTimeout(function () {
 //     clearInterval(timeRunner);
