@@ -3,7 +3,13 @@ var currentScore;
 var counter;
 var generate;
 var timeRunner;
-var isPaused = false;
+var isPaused = true;
+let bubbles = document.querySelectorAll(".bubble");
+
+const playButton = document.querySelector(".play");
+const pauseButton = document.querySelector(".pause");
+const canvas = document.querySelector(".canvas");
+const startButton = document.querySelector(".start-button");
 
 var highScore = parseInt(localStorage.getItem("highScore")) || 0;
 document.querySelector(".high-score").textContent = highScore;
@@ -21,7 +27,7 @@ function generateBubbles() {
       const score = size === 0 ? 20 : size === 1 ? 10 : 5;
       bubble.dataset.score = score;
       bubble.style.left = `${Math.floor(Math.random() * 70) + 10}%`;
-      document.querySelector(".canvas").appendChild(bubble);
+      canvas.appendChild(bubble);
       if (timer == 0) {
         clearInterval(generate);
       }
@@ -30,10 +36,11 @@ function generateBubbles() {
 }
 
 function gameLoop() {
+  togglePlayPause();
   timer = 30;
   currentScore = 0;
   counter = 0;
-  document.querySelector(".canvas").innerHTML = "";
+  canvas.innerHTML = "";
   generateBubbles();
   timeRunner = setInterval(function () {
     if (!isPaused) {
@@ -44,17 +51,15 @@ function gameLoop() {
         document.querySelector(".timer").textContent = timer;
       } else {
         updateHighScore();
-        document.querySelector(".canvas").innerHTML = `<h1>GAME OVER!</h1>`;
+        canvas.innerHTML = `<h1>GAME OVER!</h1>`;
         setTimeout(function () {
-          document.querySelector(
-            ".canvas"
-          ).innerHTML = `<button class="start-button">Start</button>`;
-        }, 1000);
+          canvas.innerHTML = `<button class="start-button">Start</button>`;
+        }, 2000);
         startButton.style.setProperty("display", "block");
         clearInterval(timeRunner);
       }
     }
-  }, 2000);
+  }, 1000);
 }
 
 function updateHighScore() {
@@ -70,61 +75,40 @@ function updateScore(score) {
   document.querySelector(".score").textContent = currentScore;
 }
 
-document.querySelector(".canvas").addEventListener("click", function (event) {
+canvas.addEventListener("click", function (event) {
   if (event.target.classList.contains("bubble")) {
     event.target.style.setProperty("display", "none");
     updateScore(parseInt(event.target.dataset.score));
   }
 });
 
-// document.addEventListener("keydown", function (event) {
-//   if (event.key === " ") {
-//     location.reload();
-//   }
-// });
-
-document.querySelector(".play").addEventListener("click", togglePlayPause);
-document.querySelector(".pause").addEventListener("click", togglePlayPause);
+playButton.addEventListener("click", togglePlayPause);
+pauseButton.addEventListener("click", togglePlayPause);
 
 function togglePlayPause() {
   console.log(isPaused);
   if (isPaused) {
     // Resume the game
     // isPaused = false;
-    document.querySelector(".pause").classList.remove("hidden");
-    document.querySelector(".play").classList.add("hidden");
+    pauseButton.classList.remove("hidden");
+    playButton.classList.add("hidden");
   } else {
     // Pause the game
     // isPaused = true;
-    document.querySelector(".play").classList.remove("hidden");
-    document.querySelector(".pause").classList.add("hidden");
+    playButton.classList.remove("hidden");
+    pauseButton.classList.add("hidden");
+    bubbles.style.setProperty("animation", "none");
   }
   isPaused = !isPaused;
 }
 
 document.querySelector(".restart").addEventListener("click", function () {
-  displayPauseButton();
   clearInterval(timeRunner);
   clearInterval(generate);
   gameLoop();
 });
 
-startButton = document.querySelector(".start-button");
 startButton.addEventListener("click", function () {
   startButton.style.setProperty("display", "none");
-  displayPauseButton();
   gameLoop();
 });
-
-function displayPauseButton() {
-  document.querySelector(".pause").classList.remove("hidden");
-  document.querySelector(".play").classList.add("hidden");
-}
-
-// document.querySelector("#restart").addEventListener("click", function () {
-//   setTimeout(function () {
-//     clearInterval(timeRunner);
-//     clearInterval(generate);
-//     gameLoop();
-//   }, 1500);
-// });
