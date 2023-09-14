@@ -4,7 +4,6 @@ var counter;
 var generate;
 var timeRunner;
 var isPaused = true;
-let bubbles = document.querySelectorAll(".bubble");
 
 const playButton = document.querySelector(".play");
 const pauseButton = document.querySelector(".pause");
@@ -36,7 +35,6 @@ function generateBubbles() {
 }
 
 function gameLoop() {
-  togglePlayPause();
   timer = 30;
   currentScore = 0;
   counter = 0;
@@ -86,29 +84,33 @@ playButton.addEventListener("click", togglePlayPause);
 pauseButton.addEventListener("click", togglePlayPause);
 
 function togglePlayPause() {
-  console.log(isPaused);
+  bubbles = document.querySelectorAll(".bubble");
   if (isPaused) {
     // Resume the game
     // isPaused = false;
     pauseButton.classList.remove("hidden");
     playButton.classList.add("hidden");
+    bubbles.forEach(function (bubble) {
+      bubble.style.setProperty("animation-play-state", "running");
+    });
   } else {
     // Pause the game
     // isPaused = true;
     playButton.classList.remove("hidden");
     pauseButton.classList.add("hidden");
-    bubbles.style.setProperty("animation", "none");
+    bubbles.forEach(function (bubble) {
+      bubble.style.setProperty("animation-play-state", "paused");
+    });
   }
   isPaused = !isPaused;
 }
 
 document.querySelector(".restart").addEventListener("click", function () {
-  clearInterval(timeRunner);
-  clearInterval(generate);
-  gameLoop();
+  window.location.reload();
 });
 
 startButton.addEventListener("click", function () {
   startButton.style.setProperty("display", "none");
+  togglePlayPause();
   gameLoop();
 });
