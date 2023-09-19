@@ -52,7 +52,7 @@ function gameLoop() {
         canvas.innerHTML = `<h1>GAME OVER!</h1>`;
         setTimeout(function () {
           canvas.innerHTML = `<button class="start-button">Start</button>`;
-        }, 2000);
+        }, 3000);
         startButton.style.setProperty("display", "block");
         clearInterval(timeRunner);
       }
