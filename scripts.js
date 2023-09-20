@@ -36,7 +36,7 @@ function generateBubbles() {
 }
 
 function gameLoop() {
-  timer = 10;
+  timer = 30;
   currentScore = 0;
   counter = 0;
   canvas.innerHTML = "";
@@ -49,15 +49,7 @@ function gameLoop() {
         else timer = timer;
         document.querySelector(".timer").textContent = timer;
       } else {
-        updateHighScore();
-        gameControl.classList.toggle("is-clickable");
-        togglePlayPause();
-        canvas.innerHTML = `<h1>GAME OVER!</h1>`;
-        setTimeout(function () {
-          canvas.innerHTML = `<button class="start-button">Start</button>`;
-        }, 3000);
-        startButton.style.setProperty("display", "block");
-        clearInterval(timeRunner);
+        endGame();
       }
     }
   }, 1000);
@@ -112,9 +104,23 @@ document.querySelector(".restart").addEventListener("click", function () {
   window.location.reload();
 });
 
-startButton.addEventListener("click", function () {
-  startButton.style.setProperty("display", "none");
+// startButton.addEventListener("click", startGame);
+
+function startGame() {
+  // startButton.style.setProperty("display", "none");
   gameControl.classList.toggle("is-clickable");
   togglePlayPause();
   gameLoop();
-});
+}
+
+function endGame() {
+  updateHighScore();
+  togglePlayPause();
+  gameControl.classList.toggle("is-clickable");
+  canvas.innerHTML = `<h1>GAME OVER!</h1>`;
+  clearInterval(timeRunner);
+  setTimeout(function () {
+    canvas.innerHTML = `<button class="start-button" onclick="startGame()">Start</button>`;
+  }, 3000);
+  // startButton.style.setProperty("display", "block");
+}
