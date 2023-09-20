@@ -7,6 +7,7 @@ var isPaused = true;
 
 const playButton = document.querySelector(".play");
 const pauseButton = document.querySelector(".pause");
+const gameControl = document.querySelector(".game-control");
 const canvas = document.querySelector(".canvas");
 const startButton = document.querySelector(".start-button");
 
@@ -35,7 +36,7 @@ function generateBubbles() {
 }
 
 function gameLoop() {
-  timer = 30;
+  timer = 10;
   currentScore = 0;
   counter = 0;
   canvas.innerHTML = "";
@@ -49,6 +50,8 @@ function gameLoop() {
         document.querySelector(".timer").textContent = timer;
       } else {
         updateHighScore();
+        gameControl.classList.toggle("is-clickable");
+        togglePlayPause();
         canvas.innerHTML = `<h1>GAME OVER!</h1>`;
         setTimeout(function () {
           canvas.innerHTML = `<button class="start-button">Start</button>`;
@@ -84,25 +87,25 @@ playButton.addEventListener("click", togglePlayPause);
 pauseButton.addEventListener("click", togglePlayPause);
 
 function togglePlayPause() {
-  bubbles = document.querySelectorAll(".bubble");
-  if (isPaused) {
-    // Resume the game
-    // isPaused = false;
-    pauseButton.classList.remove("hidden");
-    playButton.classList.add("hidden");
-    bubbles.forEach(function (bubble) {
-      bubble.style.setProperty("animation-play-state", "running");
-    });
-  } else {
-    // Pause the game
-    // isPaused = true;
-    playButton.classList.remove("hidden");
-    pauseButton.classList.add("hidden");
-    bubbles.forEach(function (bubble) {
-      bubble.style.setProperty("animation-play-state", "paused");
-    });
+  if (gameControl.classList.contains("is-clickable")) {
+    bubbles = document.querySelectorAll(".bubble");
+    if (isPaused) {
+      // Resume the game
+      pauseButton.classList.remove("hidden");
+      playButton.classList.add("hidden");
+      bubbles.forEach(function (bubble) {
+        bubble.style.setProperty("animation-play-state", "running");
+      });
+    } else {
+      // Pause the game
+      playButton.classList.remove("hidden");
+      pauseButton.classList.add("hidden");
+      bubbles.forEach(function (bubble) {
+        bubble.style.setProperty("animation-play-state", "paused");
+      });
+    }
+    isPaused = !isPaused;
   }
-  isPaused = !isPaused;
 }
 
 document.querySelector(".restart").addEventListener("click", function () {
@@ -111,6 +114,7 @@ document.querySelector(".restart").addEventListener("click", function () {
 
 startButton.addEventListener("click", function () {
   startButton.style.setProperty("display", "none");
+  gameControl.classList.toggle("is-clickable");
   togglePlayPause();
   gameLoop();
 });
