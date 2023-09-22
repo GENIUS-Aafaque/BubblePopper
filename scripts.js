@@ -5,11 +5,11 @@ var generate;
 var timeRunner;
 var isPaused = true;
 
+let startButton;
 const playButton = document.querySelector(".play");
 const pauseButton = document.querySelector(".pause");
 const gameControl = document.querySelector(".game-control");
 const canvas = document.querySelector(".canvas");
-const startButton = document.querySelector(".start-button");
 
 var highScore = parseInt(localStorage.getItem("highScore")) || 0;
 document.querySelector(".high-score").textContent = highScore;
@@ -36,23 +36,47 @@ function generateBubbles() {
 }
 
 function gameLoop() {
-  timer = 30;
+  if (!isPaused) {
+    if (timer > 0) {
+      timer--;
+      document.querySelector(".timer").textContent = timer
+        .toString()
+        .padStart(2, "0");
+    } else {
+      endGame();
+    }
+  }
+}
+
+function startGame() {
+  startButton = document.querySelector(".start-button");
+  startButton.style.setProperty("display", "none");
+  gameControl.classList.toggle("is-clickable");
+  togglePlayPause();
+  timer = 3;
   currentScore = 0;
   counter = 0;
-  canvas.innerHTML = "";
+  updateScore(0);
   generateBubbles();
-  timeRunner = setInterval(function () {
-    if (!isPaused) {
-      if (timer > 0) {
-        timer--;
-        if (timer < 10) timer = "0" + timer;
-        else timer = timer;
-        document.querySelector(".timer").textContent = timer;
-      } else {
-        endGame();
-      }
-    }
-  }, 1000);
+  timeRunner = setInterval(gameLoop, 1000);
+}
+
+function endGame() {
+  updateHighScore();
+  togglePlayPause();
+  gameControl.classList.toggle("is-clickable");
+  canvas.innerHTML = `<h1>GAME OVER!</h1>`;
+  clearInterval(timeRunner);
+  setTimeout(function () {
+    canvas.innerHTML = `<button class="start-button" onclick="startGame()">Start</button>`; // Alternatively, use forEach to remove the bubbles
+  }, 3000);
+}
+
+function updateScore(score) {
+  currentScore += score;
+  document.querySelector(".score").textContent = currentScore
+    .toString()
+    .padStart(2, "0");
 }
 
 function updateHighScore() {
@@ -62,21 +86,6 @@ function updateHighScore() {
     localStorage.setItem("highScore", highScore);
   }
 }
-
-function updateScore(score) {
-  currentScore += score;
-  document.querySelector(".score").textContent = currentScore;
-}
-
-canvas.addEventListener("click", function (event) {
-  if (event.target.classList.contains("bubble")) {
-    event.target.style.setProperty("display", "none");
-    updateScore(parseInt(event.target.dataset.score));
-  }
-});
-
-playButton.addEventListener("click", togglePlayPause);
-pauseButton.addEventListener("click", togglePlayPause);
 
 function togglePlayPause() {
   if (gameControl.classList.contains("is-clickable")) {
@@ -100,27 +109,18 @@ function togglePlayPause() {
   }
 }
 
+canvas.addEventListener("click", function (event) {
+  if (event.target.classList.contains("bubble")) {
+    event.target.style.setProperty("display", "none");
+    updateScore(parseInt(event.target.dataset.score));
+  }
+});
+
+playButton.addEventListener("click", togglePlayPause);
+pauseButton.addEventListener("click", togglePlayPause);
+
 document.querySelector(".restart").addEventListener("click", function () {
   window.location.reload();
 });
 
 // startButton.addEventListener("click", startGame);
-
-function startGame() {
-  // startButton.style.setProperty("display", "none");
-  gameControl.classList.toggle("is-clickable");
-  togglePlayPause();
-  gameLoop();
-}
-
-function endGame() {
-  updateHighScore();
-  togglePlayPause();
-  gameControl.classList.toggle("is-clickable");
-  canvas.innerHTML = `<h1>GAME OVER!</h1>`;
-  clearInterval(timeRunner);
-  setTimeout(function () {
-    canvas.innerHTML = `<button class="start-button" onclick="startGame()">Start</button>`;
-  }, 3000);
-  // startButton.style.setProperty("display", "block");
-}

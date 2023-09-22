@@ -89,7 +89,7 @@ article {
   padding: 0.2em 0.8em;
   font-size: 1.5em;
   color: #1b69a1;
-  background-color: #5cbbd8;
+  /* background-color: #5cbbd8; ---- This conflicts with the display: none; in js */
   border: solid 0.2em rgba(0, 92, 173, 0.704);
   background: linear-gradient(
     rgb(181, 232, 255) 26%,
