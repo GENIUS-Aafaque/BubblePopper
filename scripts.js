@@ -110,7 +110,7 @@ function togglePlayPause() {
 }
 
 canvas.addEventListener("click", function (event) {
-  if (event.target.classList.contains("bubble")) {
+  if (event.target.classList.contains("bubble") && !isPaused) {
     event.target.style.setProperty("display", "none");
     updateScore(parseInt(event.target.dataset.score));
   }
