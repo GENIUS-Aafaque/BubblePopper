@@ -17,7 +17,7 @@ document.querySelector(".high-score").textContent = highScore;
 function generateBubbles() {
   if (!isPaused) {
     counter += 1;
-    bubble = document.createElement("div");
+    const bubble = document.createElement("div");
     bubble.className = `bubble c${counter}`;
     const size = Math.floor(Math.random() * 3);
     const bubbleSizeClass =
@@ -27,6 +27,19 @@ function generateBubbles() {
     bubble.dataset.score = score;
     bubble.style.left = `${Math.floor(Math.random() * 70) + 10}%`;
     canvas.appendChild(bubble);
+
+    const canvasTop = canvas.getBoundingClientRect().top;
+
+    function checkBubblePosition() {
+      const bubbleRect = bubble.getBoundingClientRect();
+      if (bubbleRect.bottom < canvasTop) {
+        canvas.removeChild(bubble);
+      } else {
+        requestAnimationFrame(checkBubblePosition);
+      }
+    }
+    requestAnimationFrame(checkBubblePosition);
+
     if (timer == 0) {
       clearInterval(generate);
     }
