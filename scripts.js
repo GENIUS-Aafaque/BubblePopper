@@ -1,9 +1,9 @@
-var timer;
-var currentScore;
-var counter;
-var generate;
-var timeRunner;
-var isPaused = true;
+let timer;
+let currentScore;
+let counter;
+let generate;
+let timeRunner;
+let isPaused = true;
 
 let startButton;
 const playButton = document.querySelector(".play");
@@ -11,28 +11,26 @@ const pauseButton = document.querySelector(".pause");
 const gameControl = document.querySelector(".game-control");
 const canvas = document.querySelector(".canvas");
 
-var highScore = parseInt(localStorage.getItem("highScore")) || 0;
+let highScore = parseInt(localStorage.getItem("highScore")) || 0;
 document.querySelector(".high-score").textContent = highScore;
 
 function generateBubbles() {
-  generate = setInterval(function () {
-    if (!isPaused) {
-      counter += 1;
-      bubble = document.createElement("div");
-      bubble.className = `bubble c${counter}`;
-      const size = Math.floor(Math.random() * 3);
-      const bubbleSizeClass =
-        size === 0 ? "small" : size === 1 ? "medium" : "large";
-      bubble.classList.add(bubbleSizeClass);
-      const score = size === 0 ? 20 : size === 1 ? 10 : 5;
-      bubble.dataset.score = score;
-      bubble.style.left = `${Math.floor(Math.random() * 70) + 10}%`;
-      canvas.appendChild(bubble);
-      if (timer == 0) {
-        clearInterval(generate);
-      }
+  if (!isPaused) {
+    counter += 1;
+    bubble = document.createElement("div");
+    bubble.className = `bubble c${counter}`;
+    const size = Math.floor(Math.random() * 3);
+    const bubbleSizeClass =
+      size === 0 ? "small" : size === 1 ? "medium" : "large";
+    bubble.classList.add(bubbleSizeClass);
+    const score = size === 0 ? 20 : size === 1 ? 10 : 5;
+    bubble.dataset.score = score;
+    bubble.style.left = `${Math.floor(Math.random() * 70) + 10}%`;
+    canvas.appendChild(bubble);
+    if (timer == 0) {
+      clearInterval(generate);
     }
-  }, 750);
+  }
 }
 
 function gameLoop() {
@@ -53,12 +51,12 @@ function startGame() {
   startButton.style.setProperty("display", "none");
   gameControl.classList.toggle("is-clickable");
   togglePlayPause();
-  timer = 3;
+  timer = 10;
   currentScore = 0;
   counter = 0;
   updateScore(0);
-  generateBubbles();
   timeRunner = setInterval(gameLoop, 1000);
+  generate = setInterval(generateBubbles, 750);
 }
 
 function endGame() {
