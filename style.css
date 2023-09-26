@@ -57,7 +57,8 @@ article {
   gap: 10%;
 }
 
-.buttons > img {
+.buttons > img,
+.trophy {
   height: 5vh;
 }
 
