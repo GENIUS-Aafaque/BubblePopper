@@ -39,7 +39,7 @@ article {
 .display {
   font-size: 2vh;
   display: flex;
-  gap: 0.3em;
+  gap: 0.4em;
   align-items: center;
   justify-content: center;
   color: rgb(255, 245, 230);
@@ -54,7 +54,7 @@ article {
 
 .buttons {
   display: flex;
-  gap: 10%;
+  gap: 0.4em;
 }
 
 .buttons > img,
@@ -132,6 +132,13 @@ article {
 }
 
 @media (max-width: 500px) {
+  .header {
+    gap: 2%;
+  }
+  .buttons,
+  .display {
+    gap: 0.1em;
+  }
   .small {
     width: 8vw;
     height: 8vw;
