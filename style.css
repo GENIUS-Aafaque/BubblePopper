@@ -59,7 +59,7 @@ article {
 
 .buttons > img,
 .trophy,
-.timer {
+.timer-icon {
   height: 4vh;
 }
 
@@ -129,4 +129,19 @@ article {
 .large {
   width: 13vh;
   height: 13vh;
+}
+
+@media (max-width: 500px) {
+  .small {
+    width: 8vw;
+    height: 8vw;
+  }
+  .medium {
+    width: 10vw;
+    height: 10vw;
+  }
+  .large {
+    width: 13vw;
+    height: 13vw;
+  }
 }
