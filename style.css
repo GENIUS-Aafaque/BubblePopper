@@ -58,8 +58,9 @@ article {
 }
 
 .buttons > img,
-.trophy {
-  height: 5vh;
+.trophy,
+.timer {
+  height: 4vh;
 }
 
 .hidden {
